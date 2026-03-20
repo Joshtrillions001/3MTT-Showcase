@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ALearn – Airtel Learn</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+[data-theme="light"] {
+  --bg:         #F7F5F0;
+  --bg2:        #EFECE5;
+  --surface:    #FFFFFF;
+  --surface2:   #F2EFE8;
+  --border:     rgba(0,0,0,0.08);
+  --border2:    rgba(0,0,0,0.14);
+  --text:       #0F0F0E;
+  --text2:      #4A4845;
+  --text3:      #8A8680;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.07);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.10), 0 24px 64px rgba(0,0,0,0.09);
+  --hero-bg:    #0F0F0E;
+  --hero-text:  #FFFFFF;
+  --pill-bg:    rgba(0,0,0,0.06);
+  --pill-hover: rgba(0,0,0,0.10);
+  --input-bg:   #FFFFFF;
+}
+[data-theme="dark"] {
+  --bg:         #0C0C0B;
+  --bg2:        #141413;
+  --surface:    #1A1A18;
+  --surface2:   #222220;
+  --border:     rgba(255,255,255,0.07);
+  --border2:    rgba(255,255,255,0.12);
+  --text:       #F0EDE6;
+  --text2:      #A8A49C;
+  --text3:      #6A6660;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.25);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.35), 0 12px 40px rgba(0,0,0,0.3);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.5), 0 24px 64px rgba(0,0,0,0.4);
+  --hero-bg:    #111110;
+  --hero-text:  #F0EDE6;
+  --pill-bg:    rgba(255,255,255,0.06);
+  --pill-hover: rgba(255,255,255,0.10);
+  --input-bg:   #1E1E1C;
+}
+
+/* Brand */
+--red:        #E8202A;
+--red-dim:    rgba(232,32,42,0.12);
+--red-glow:   rgba(232,32,42,0.25);
+--green:      #00A651;
+--green-dim:  rgba(0,166,81,0.12);
+--green-glow: rgba(0,166,81,0.3);
+--gold:       #D4A017;
+--gold-dim:   rgba(212,160,23,0.12);
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background 0.35s ease, color 0.35s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.header-inner {
+  max-width: 1100px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px; padding: 0 1.5rem; gap: 1rem;
+}
+.brand {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem; font-weight: 700;
+  letter-spacing: -1px;
+  display: flex; align-items: baseline; gap: 1px;
+  text-decoration: none;
+}
+.brand-a { color: #E8202A; }
+.brand-learn { color: var(--text); }
+.brand-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem; font-weight: 500;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+  margin-left: 6px;
+  text-transform: uppercase;
+  align-self: center;
+}
+
+.header-actions { display: flex; align-items: center; gap: 0.5rem; }
+
+.hdr-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--pill-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem; font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.hdr-btn:hover { background: var(--pill-hover); color: var(--text); }
+.hdr-btn svg { flex-shrink: 0; }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--pill-bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text2);
+}
+.theme-toggle:hover { background: var(--pill-hover); color: var(--text); transform: rotate(15deg); }
+
+/* Mode pill */
+.mode-group {
+  display: flex;
+  background: var(--pill-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+.mode-btn {
+  border: none; background: transparent;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.78rem; font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text3); cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 8px;
+  margin: 2px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  background: var(--hero-bg);
+  color: var(--hero-text);
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-mesh {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 80% at 15% 50%, rgba(232,32,42,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 85% 30%, rgba(0,166,81,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 50% 100%, rgba(212,160,23,0.10) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 99px;
+  padding: 0.3rem 1rem;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: #00A651;
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  position: relative;
+  margin-bottom: 1rem;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, #E8202A 0%, #FF6B6B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: rgba(255,255,255,0.55);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  position: relative;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ---- SEARCH BOX ---- */
+.search-box {
+  max-width: 640px; margin: 0 auto 1.5rem;
+  position: relative;
+}
+.search-inner {
+  display: flex;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 0 rgba(232,32,42,0);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.search-inner:focus-within {
+  border-color: #E8202A;
+  box-shadow: var(--shadow-lg), 0 0 0 4px rgba(232,32,42,0.12);
+}
+.search-inner input {
+  flex: 1; border: none; outline: none;
+  padding: 1rem 1.2rem;
+  font-size: 0.98rem; font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  background: transparent;
+  color: var(--text);
+}
+.search-inner input::placeholder { color: var(--text3); }
+.search-inner button {
+  background: #E8202A;
+  border: none; cursor: pointer;
+  padding: 0 1.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  color: white;
+  display: flex; align-items: center; gap: 6px;
+  transition: background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.search-inner button:hover { background: #c4171f; }
+
+/* Quick tags */
+.quick-tags {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 0.45rem;
+  position: relative;
+}
+.qtag {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  border-radius: 99px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.78rem; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Outfit', sans-serif;
+}
+.qtag:hover { background: rgba(255,255,255,0.14); color: white; border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+/* VOICE HERO BUTTON */
+.voice-hero {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 99px;
+  padding: 0.7rem 1.6rem;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-top: 0.5rem;
+  position: relative;
+}
+.voice-hero:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.35); color: white; }
+.voice-dot {
+  width: 8px; height: 8px; background: #E8202A;
+  border-radius: 50%;
+  animation: pulse-dot 1.8s infinite;
+}
+@keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.4);opacity:0.6;} }
+
+/* ============================================================
+   CONTROLS STRIP
+   ============================================================ */
+.controls-strip {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.65rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.ctrl-group {
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.ctrl-lbl {
+  font-size: 0.73rem; font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ctrl-divider {
+  width: 1px; height: 20px;
+  background: var(--border2);
+  margin: 0 0.25rem;
+}
+
+select.lang-sel {
+  appearance: none;
+  background: var(--pill-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 0.38rem 1.9rem 0.38rem 0.7rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem; font-weight: 500;
+  color: var(--text2); cursor: pointer;
+  transition: border-color 0.2s;
+}
+select.lang-sel:focus { outline: none; border-color: #E8202A; }
+
+.bw-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--pill-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.38rem 0.75rem;
+  font-size: 0.8rem; font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text2); cursor: pointer;
+  transition: all 0.2s;
+}
+.bw-btn.on { background: rgba(212,160,23,0.14); border-color: rgba(212,160,23,0.4); color: #b8880e; }
+.bw-btn:hover { border-color: var(--border2); color: var(--text); }
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+main {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ============================================================
+   SECTION HEADING
+   ============================================================ */
+.sec-head {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.sec-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.sec-title { font-size: 1rem; font-weight: 700; font-family: 'Fraunces', serif; letter-spacing: -0.3px; }
+.sec-sub { font-size: 0.78rem; color: var(--text3); font-weight: 400; margin-top: 1px; }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
+  animation: rise 0.45s both;
+}
+@keyframes rise { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:none;} }
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+.loading-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.75rem;
+}
+.loading-bars {
+  display: flex; gap: 4px; align-items: flex-end; height: 28px;
+}
+.bar {
+  width: 5px; border-radius: 3px;
+  animation: barwave 1.2s ease-in-out infinite;
+}
+.bar:nth-child(1){ height:12px; background:#E8202A; animation-delay:0s; }
+.bar:nth-child(2){ height:20px; background:#D4A017; animation-delay:0.15s; }
+.bar:nth-child(3){ height:28px; background:#00A651; animation-delay:0.3s; }
+.bar:nth-child(4){ height:20px; background:#E8202A; animation-delay:0.45s; }
+.bar:nth-child(5){ height:12px; background:#D4A017; animation-delay:0.6s; }
+@keyframes barwave { 0%,100%{transform:scaleY(0.4);opacity:0.5;} 50%{transform:scaleY(1);opacity:1;} }
+.loading-text { font-size: 0.95rem; font-weight: 500; color: var(--text2); }
+
+/* ============================================================
+   ASSISTANT BUBBLE
+   ============================================================ */
+.bubble-wrap { position: relative; margin-bottom: 1.5rem; }
+.bot-avatar {
+  position: absolute; top: -10px; left: 16px;
+  width: 32px; height: 32px; border-radius: 10px;
+  background: linear-gradient(135deg, #E8202A, #c4171f);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(232,32,42,0.4);
+  border: 2px solid var(--surface);
+  z-index: 1;
+}
+.bubble {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 4px 20px 20px 20px;
+  padding: 1.2rem 1.3rem 1.1rem;
+  margin-top: 12px;
+  font-size: 0.97rem; line-height: 1.7;
+  color: var(--text2);
+  font-weight: 400;
+}
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.steps { list-style: none; }
+.step {
+  display: flex; gap: 1rem; padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+  animation: rise 0.4s both;
+  transition: transform 0.15s;
+}
+.step:last-child { border-bottom: none; }
+.step:hover { transform: translateX(3px); }
+.step-num {
+  min-width: 32px; height: 32px; border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.82rem;
+  font-family: 'Fraunces', serif;
+  flex-shrink: 0; margin-top: 2px;
+  transition: background 0.35s, color 0.35s;
+}
+.step-body { font-size: 0.95rem; line-height: 1.65; color: var(--text2); }
+.step-body strong { color: var(--text); font-weight: 700; }
+
+/* ============================================================
+   CATEGORY GRID
+   ============================================================ */
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+.cat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 0.5rem 1rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.22s;
+  font-size: 0.82rem; font-weight: 600;
+  color: var(--text2);
+  text-align: center;
+}
+.cat:hover {
+  background: var(--surface);
+  border-color: #E8202A;
+  color: var(--text);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(232,32,42,0.15);
+}
+.cat-emoji { font-size: 1.9rem; line-height: 1; display: block; }
+.cat-label { line-height: 1.2; }
+
+/* ============================================================
+   VIDEO GRID
+   ============================================================ */
+.vids-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 0.9rem;
+}
+.vid-card {
+  border-radius: 14px; overflow: hidden;
+  cursor: pointer; transition: all 0.22s;
+  background: #111;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.vid-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.vid-thumb {
+  aspect-ratio: 16/9;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.vid-thumb-bg { position: absolute; inset: 0; }
+.vid-play {
+  width: 48px; height: 48px;
+  background: rgba(232,32,42,0.92);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(232,32,42,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.vid-card:hover .vid-play { transform: scale(1.1); box-shadow: 0 6px 28px rgba(232,32,42,0.7); }
+.vid-info { padding: 0.7rem 0.8rem; background: var(--surface); }
+.vid-title { font-size: 0.82rem; font-weight: 600; color: var(--text); line-height: 1.35; }
+.vid-dur { font-size: 0.72rem; color: var(--text3); margin-top: 3px; }
+
+/* ============================================================
+   FEATURE BANNER (info card)
+   ============================================================ */
+.banner {
+  background: linear-gradient(135deg, #0F0F0E 0%, #1a1a18 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex; align-items: center; gap: 1.2rem;
+  overflow: hidden; position: relative;
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  right: -30px; top: -30px;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(232,32,42,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.banner-icon { font-size: 2.2rem; flex-shrink: 0; }
+.banner-body {}
+.banner-title { font-size: 0.95rem; font-weight: 700; color: #F0EDE6; font-family: 'Fraunces', serif; margin-bottom: 0.3rem; }
+.banner-sub { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
+.banner-sub strong { color: #D4A017; }
+
+/* ============================================================
+   VOICE MODAL
+   ============================================================ */
+.vmodal-bg {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.vmodal-bg.open { opacity: 1; pointer-events: all; }
+.vmodal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 28px;
+  padding: 2.5rem 2rem 2rem;
+  max-width: 340px; width: 92%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  transform: scale(0.88) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.vmodal-bg.open .vmodal { transform: scale(1) translateY(0); }
+.mic-orb {
+  width: 96px; height: 96px; border-radius: 50%;
+  background: linear-gradient(135deg, #E8202A, #c4171f);
+  margin: 0 auto 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  position: relative;
+}
+.mic-orb::after, .mic-orb::before {
+  content: ''; position: absolute; border-radius: 50%;
+  border: 2px solid rgba(232,32,42,0.4);
+  animation: ring 2s linear infinite;
+}
+.mic-orb::before { width: 120px; height: 120px; animation-delay: 0.5s; }
+.mic-orb::after { width: 148px; height: 148px; }
+@keyframes ring { 0%{transform:scale(0.8);opacity:0.8;} 100%{transform:scale(1.2);opacity:0;} }
+.vmodal-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.vmodal-hint { font-size: 0.85rem; color: var(--text3); margin-bottom: 1rem; line-height: 1.5; }
+.vmodal-transcript {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 0.75rem 1rem;
+  font-size: 0.92rem; color: var(--text2);
+  min-height: 2.5em; margin-bottom: 1.2rem;
+  font-style: italic;
+}
+.vmodal-close {
+  background: var(--pill-bg); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 0.6rem 1.5rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600;
+  color: var(--text2); cursor: pointer; transition: all 0.2s;
+}
+.vmodal-close:hover { background: var(--pill-hover); color: var(--text); }
+
+/* ============================================================
+   CONVERSATIONAL FOLLOW-UP
+   ============================================================ */
+.chat-flow {
+  display: flex; flex-direction: column; gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.chat-msg {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  animation: rise 0.4s both;
+}
+.chat-msg.user-msg { flex-direction: row-reverse; }
+.chat-avatar {
+  width: 36px; height: 36px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+}
+.chat-avatar.bot { background: linear-gradient(135deg,#E8202A,#c4171f); box-shadow: 0 3px 10px rgba(232,32,42,0.3); }
+.chat-avatar.usr { background: var(--surface2); border: 1px solid var(--border2); }
+.chat-bubble {
+  max-width: 82%;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.95rem; line-height: 1.65; font-weight: 400;
+}
+.chat-bubble.bot {
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text2); border-radius: 4px 18px 18px 18px;
+}
+.chat-bubble.usr {
+  background: #E8202A; color: white;
+  border-radius: 18px 4px 18px 18px; font-weight: 600;
+}
+.followup-options {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 0.65rem; animation: rise 0.45s 0.15s both;
+}
+.fup-btn {
+  background: var(--surface); border: 1.5px solid var(--border2);
+  border-radius: 99px; padding: 0.48rem 1.1rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.84rem; font-weight: 600;
+  color: var(--text2); cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 5px;
+}
+.fup-btn:hover, .fup-btn.selected {
+  background: #E8202A; color: white; border-color: #E8202A;
+  transform: translateY(-2px); box-shadow: 0 4px 14px rgba(232,32,42,0.3);
+}
+.fup-custom {
+  display: flex; gap: 0.5rem; margin-top: 0.6rem; animation: rise 0.45s 0.25s both;
+}
+.fup-custom input {
+  flex: 1; border: 1.5px solid var(--border2); border-radius: 10px;
+  padding: 0.5rem 0.85rem; font-family: 'Outfit', sans-serif; font-size: 0.88rem;
+  background: var(--input-bg); color: var(--text); outline: none; transition: border-color 0.2s;
+}
+.fup-custom input:focus { border-color: #E8202A; }
+.fup-custom button {
+  background: #E8202A; border: none; border-radius: 10px;
+  padding: 0.5rem 1rem; color: white; cursor: pointer;
+  font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 700; transition: background 0.2s;
+}
+.fup-custom button:hover { background: #c4171f; }
+.typing-dots { display: flex; gap: 4px; align-items: center; padding: 0.15rem 0; }
+.typing-dots span {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--text3);
+  animation: tdot 1.2s infinite both;
+}
+.typing-dots span:nth-child(2){ animation-delay:0.2s; }
+.typing-dots span:nth-child(3){ animation-delay:0.4s; }
+@keyframes tdot { 0%,80%,100%{transform:scale(0.6);opacity:0.4;} 40%{transform:scale(1);opacity:1;} }
+.divider-line { height:1px; background:var(--border); margin:1.25rem 0; }
+
+/* ============================================================
+   CLEAR BTN / BACK
+   ============================================================ */
+.back-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--pill-bg); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 0.55rem 1rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600;
+  color: var(--text2); cursor: pointer; transition: all 0.2s;
+  margin-bottom: 1.2rem;
+}
+.back-btn:hover { color: var(--text); background: var(--pill-hover); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem;
+  text-align: center;
+}
+.footer-brand { font-family: 'Fraunces', serif; font-size: 1.1rem; letter-spacing: -0.3px; margin-bottom: 0.3rem; }
+.footer-brand .fa { color: #E8202A; }
+.footer-sub { font-size: 0.78rem; color: var(--text3); }
+
+/* ============================================================
+   CHILD MODE
+   ============================================================ */
+body.child .cat-emoji { font-size: 2.5rem; }
+body.child .cat { padding: 1.5rem 0.5rem 1.2rem; font-size: 0.9rem; }
+body.child .step-num { width: 38px; height: 38px; font-size: 0.95rem; }
+body.child .step-body { font-size: 1.05rem; }
+body.child .voice-hero { padding: 0.85rem 2rem; font-size: 1rem; }
+body.child .search-inner input { font-size: 1.1rem; }
+
+/* ============================================================
+   LOW BW
+   ============================================================ */
+body.lowbw * { animation: none !important; transition: background 0.35s, color 0.35s, border-color 0.35s !important; }
+body.lowbw .hero-mesh, body.lowbw .hero-grid { display: none; }
+body.lowbw .vid-card .vid-thumb { display: none; }
+body.lowbw .vid-card { border-radius: 10px; }
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.hidden { display: none !important; }
+
+@media(max-width:640px){
+  .header-inner { padding: 0 1rem; }
+  .brand-tag { display: none; }
+  .hero { padding: 3rem 1rem 2.5rem; }
+  .hero h1 { letter-spacing: -0.8px; }
+  main { padding: 1.5rem 1rem 3rem; }
+  .cats-grid { grid-template-columns: repeat(3,1fr); }
+  .vids-grid { grid-template-columns: 1fr 1fr; }
+  .controls-strip { gap: 0.4rem; }
+  .ctrl-divider { display: none; }
+}
+@media(max-width:400px){
+  .header-actions .mode-group { display: none; }
+  .cats-grid { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <div class="header-inner">
+    <a class="brand" href="#" onclick="clearResults();return false;">
+      <span class="brand-a">A</span><span class="brand-learn">Learn</span>
+      <span class="brand-tag">by Airtel</span>
+    </a>
+    <div class="header-actions">
+      <div class="mode-group" role="group" aria-label="User mode">
+        <button class="mode-btn active" id="adult-btn" onclick="setMode('adult')" aria-pressed="true">👨 Adult</button>
+        <button class="mode-btn" id="child-btn" onclick="setMode('child')" aria-pressed="false">👶 Child</button>
+      </div>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle theme">
+        <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">🇳🇬 Nigeria's Learning Platform</div>
+  <h1>Learn <em>Anything.</em><br/>Learn <em>Today.</em></h1>
+  <p class="hero-sub">Step-by-step knowledge in your language. Built for every Nigerian — whether you're in Lagos, Kano, or Aba.</p>
+
+  <div class="search-box">
+    <div class="search-inner">
+      <input type="text" id="search-input" placeholder="Wetin you wan learn? e.g. How to farm, Maths…" aria-label="Search topic"/>
+      <button onclick="doSearch()" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+
+  <div class="quick-tags">
+    <span class="qtag" onclick="setSearch('How to start a business')">🏪 Business</span>
+    <span class="qtag" onclick="setSearch('Basic farming tips Nigeria')">🌾 Farming</span>
+    <span class="qtag" onclick="setSearch('Primary school mathematics')">➕ Mathematics</span>
+    <span class="qtag" onclick="setSearch('How to cook jollof rice')">🍛 Jollof Rice</span>
+    <span class="qtag" onclick="setSearch('How to stay healthy')">💊 Health</span>
+    <span class="qtag" onclick="setSearch('How to use smartphone basics')">📱 Smartphone</span>
+  </div>
+
+  <div style="margin-top:1.4rem;">
+    <button class="voice-hero" onclick="openVoice()" aria-label="Speak to Learn">
+      <div class="voice-dot"></div>
+      🎙️ Speak to Learn
+    </button>
+  </div>
+</section>
+
+<!-- ===================== CONTROLS ===================== -->
+<div class="controls-strip">
+  <div class="ctrl-group">
+    <span class="ctrl-lbl">🌍 Language</span>
+    <select class="lang-sel" id="lang-sel" onchange="setLang(this.value)" aria-label="Select language">
+      <option value="en">English</option>
+      <option value="pidgin">Nigerian Pidgin</option>
+      <option value="ha">Hausa</option>
+      <option value="ig">Igbo</option>
+      <option value="yo">Yorùbá</option>
+    </select>
+  </div>
+  <div class="ctrl-divider"></div>
+  <button class="bw-btn" id="bw-btn" onclick="toggleBW()" aria-label="Toggle Low Bandwidth">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6s4-2 11-2 11 2 11 2"/><path d="M1 12s4-2 11-2 11 2 11 2"/><circle cx="12" cy="18" r="2"/></svg>
+    <span id="bw-label">Low Bandwidth</span>
+  </button>
+  <div class="ctrl-divider"></div>
+  <span style="font-size:0.75rem;color:var(--text3);" id="mode-indicator">👨 Adult Mode</span>
+</div>
+
+<!-- ===================== MAIN ===================== -->
+<main>
+
+  <!-- LOADING -->
+  <div id="loading-sec" class="card loading-card hidden">
+    <div class="loading-bars">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <span class="loading-text" id="loading-txt">Finding best answer for you…</span>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results-sec" class="hidden">
+    <button class="back-btn" onclick="clearResults()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Browse
+    </button>
+
+    <!-- CONVERSATIONAL CHAT CARD -->
+    <div class="card" id="chat-card">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:rgba(232,32,42,0.1);">💬</div>
+        <div>
+          <div class="sec-title" id="result-title">Let's Learn Together</div>
+          <div class="sec-sub">ALearn go guide you step by step</div>
+        </div>
+      </div>
+
+      <!-- Chat flow messages -->
+      <div class="chat-flow" id="chat-flow"></div>
+
+      <!-- Follow-up zone (question + option buttons) -->
+      <div id="followup-zone" class="hidden">
+        <div id="followup-options-wrap"></div>
+      </div>
+    </div>
+
+    <!-- Steps + Videos — hidden until follow-up answered -->
+    <div id="steps-card" class="card hidden">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:rgba(0,166,81,0.1);">📋</div>
+        <div>
+          <div class="sec-title" id="steps-card-title">Step-by-Step Guide</div>
+          <div class="sec-sub" id="steps-card-sub">Follow each step carefully</div>
+        </div>
+      </div>
+      <ul class="steps" id="steps-list"></ul>
+    </div>
+
+    <!-- Videos -->
+    <div class="card" id="vids-card" style="display:none;">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:rgba(212,160,23,0.1);">▶️</div>
+        <div>
+          <div class="sec-title">Watch &amp; Learn</div>
+          <div class="sec-sub">Related video tutorials on YouTube</div>
+        </div>
+      </div>
+      <div class="vids-grid" id="vids-grid"></div>
+    </div>
+  </div>
+
+  <!-- BROWSE (default) -->
+  <div id="browse-sec">
+    <div class="card">
+      <div class="sec-head">
+        <div class="sec-icon" style="background:rgba(212,160,23,0.12);">🧭</div>
+        <div>
+          <div class="sec-title">Browse Topics</div>
+          <div class="sec-sub">Tap any topic to start learning</div>
+        </div>
+      </div>
+      <div class="cats-grid">
+        <button class="cat" onclick="setSearch('Primary school mathematics')"><span class="cat-emoji">➕</span><span class="cat-label">Maths</span></button>
+        <button class="cat" onclick="setSearch('How to read and write English')"><span class="cat-emoji">📖</span><span class="cat-label">Literacy</span></button>
+        <button class="cat" onclick="setSearch('Basic farming tips Nigeria')"><span class="cat-emoji">🌾</span><span class="cat-label">Farming</span></button>
+        <button class="cat" onclick="setSearch('How to start a small business in Nigeria')"><span class="cat-emoji">🏪</span><span class="cat-label">Business</span></button>
+        <button class="cat" onclick="setSearch('Basic health tips Nigeria')"><span class="cat-emoji">🏥</span><span class="cat-label">Health</span></button>
+        <button class="cat" onclick="setSearch('How to use smartphone basics')"><span class="cat-emoji">📱</span><span class="cat-label">Technology</span></button>
+        <button class="cat" onclick="setSearch('Nigeria civic rights citizenship')"><span class="cat-emoji">🗳️</span><span class="cat-label">Civics</span></button>
+        <button class="cat" onclick="setSearch('How to cook Nigerian food')"><span class="cat-emoji">🍛</span><span class="cat-label">Cooking</span></button>
+        <button class="cat" onclick="setSearch('Financial savings tips Nigeria')"><span class="cat-emoji">💰</span><span class="cat-label">Finance</span></button>
+        <button class="cat" onclick="setSearch('Science for children Nigeria')"><span class="cat-emoji">🔬</span><span class="cat-label">Science</span></button>
+        <button class="cat" onclick="setSearch('Nigerian history and culture')"><span class="cat-emoji">🏺</span><span class="cat-label">Culture</span></button>
+        <button class="cat" onclick="setSearch('Vocational skill carpentry welding')"><span class="cat-emoji">🔧</span><span class="cat-label">Vocational</span></button>
+      </div>
+    </div>
+
+    <div class="banner">
+      <span class="banner-icon">💡</span>
+      <div class="banner-body">
+        <div class="banner-title">Works on 2G — Even in Rural Areas</div>
+        <div class="banner-sub" id="did-you-know">Turn on <strong>Low Bandwidth Mode</strong> above to strip images and animations. ALearn delivers knowledge no matter your connection. 🇳🇬</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-brand"><span class="fa">A</span>Learn by Airtel Nigeria</div>
+  <div class="footer-sub">🇳🇬 Empowering every Nigerian to learn &amp; grow · Works offline-ready</div>
+</footer>
+
+<!-- ===================== VOICE MODAL ===================== -->
+<div class="vmodal-bg" id="vmodal" role="dialog" aria-modal="true">
+  <div class="vmodal">
+    <div class="mic-orb">🎙️</div>
+    <div class="vmodal-title" id="vstatus">Listening… Talk now!</div>
+    <div class="vmodal-hint" id="vhint">Say what you want to learn, e.g. "How to plant tomato"</div>
+    <div class="vmodal-transcript" id="vtranscript">Waiting for your voice…</div>
+    <button class="vmodal-close" onclick="closeVoice()">✕ Cancel</button>
+  </div>
+</div>
+
+<!-- ===================== SCRIPT ===================== -->
+<script>
+var LANG='en', MODE='adult', BW=false, DARK=false;
+var CONV_STATE = { topic: null, query: null, answered: false, context: {} };
+
+/* ============================================================
+   CONVERSATIONAL FOLLOW-UP DEFINITIONS
+   Each topic can define:
+     q  — the follow-up question (Pidgin)
+     opts — quick-pick buttons [{label, value, emoji}]
+     custom — show free-text input? {placeholder}
+     handler(query, answer, context) → {intro, steps[], videos[], subtitle}
+   ============================================================ */
+var FOLLOWUPS = {
+
+  jollof: {
+    q: "Nice one! 🍚 For how many people you wan cook am?",
+    opts: [
+      { label: "Just me (1)", value: 1, emoji: "🙋" },
+      { label: "2–3 people", value: 2, emoji: "👫" },
+      { label: "Family (4–6)", value: 4, emoji: "👨‍👩‍👧‍👦" },
+      { label: "Party (10+)", value: 10, emoji: "🎉" }
+    ],
+    custom: { placeholder: "Or type exact number e.g. 8" },
+    handler: function(q, answer, ctx) {
+      var n = parseInt(answer) || 2;
+      var rice = n <= 1 ? "1 cup" : n <= 3 ? "2 cups" : n <= 6 ? "4 cups" : "8 cups";
+      var tom = n <= 1 ? "3 tomatoes" : n <= 3 ? "6 tomatoes" : n <= 6 ? "10 tomatoes" : "1.5kg tomatoes";
+      var tat = n <= 1 ? "1 tatashe" : n <= 3 ? "3 tatashe" : n <= 6 ? "5 tatashe" : "8 tatashe";
+      var sco = n <= 1 ? "1 scotch bonnet" : n <= 3 ? "2–3" : n <= 6 ? "4–5" : "8–10";
+      var oil = n <= 1 ? "3 tbsp" : n <= 3 ? "5 tbsp" : n <= 6 ? "½ cup" : "1 cup";
+      var stk = n <= 1 ? "½ cup stock" : n <= 3 ? "1.5 cups stock" : n <= 6 ? "3 cups stock" : "6 cups stock";
+      var oni = n <= 1 ? "1 onion" : n <= 3 ? "2 onions" : "3 onions";
+      var time = n <= 3 ? "25–30 mins" : n <= 6 ? "35–45 mins" : "50–60 mins";
+      var size = n <= 1 ? "1 person" : n + " people";
+      return {
+        intro: "Oya chef! 👨‍🍳🔥 Make I give you the <strong>exact measurements for " + size + "</strong>. Follow am step by step and your jollof go sweet die! 🍲",
+        subtitle: "Jollof Rice for " + size,
+        sub: "Measured perfectly for " + size,
+        steps: [
+          "🛒 <strong>Your ingredients (for " + size + "):</strong> " + rice + " long grain rice · " + tom + " · " + tat + " · " + sco + " scotch bonnet · " + oni + " · tomato paste (2 tbsp) · " + stk + " · " + oil + " oil · seasoning cubes · curry · thyme · bay leaves · salt",
+          "🫙 <strong>Blend the pepper base</strong> — blend your tomatoes, tatashe, and scotch bonnet together until very smooth. No chunks allowed!",
+          "🔥 <strong>Fry the base well</strong> — heat " + oil + " oil in pot, fry diced onion till golden. Add tomato paste (fry 5 mins), then add the blended pepper. Fry <strong>20–30 mins</strong> until raw smell disappears completely — this na the secret step!",
+          "🧂 <strong>Season am</strong> — add " + stk + ", seasoning cubes, curry, thyme, bay leaves, and salt. Taste and adjust to your liking.",
+          "🍚 <strong>Add your " + rice + " rice</strong> — wash rice until water runs clear, drain well, then stir into the pot. Make sure every grain get the pepper!",
+          "🫕 <strong>Seal with foil method</strong> — cover pot tightly with aluminium foil FIRST, then put the lid on top. Cook on <strong>low heat</strong> for " + time + ". This creates the smoky party-jollof effect! 🔥",
+          "👀 <strong>Check halfway through</strong> — stir gently from the bottom after half the time. Add small hot water if e too dry.",
+          "🍽️ <strong>Serve and enjoy!</strong> — dish with fried chicken, dodo (plantain), coleslaw. Your jollof don ready! Chop well! 😋🎉"
+        ],
+        videos: [
+          { t: "How to Cook Nigerian Party Jollof Rice", d: "10:20" },
+          { t: "Perfect Jollof Rice Secret Tips Revealed", d: "8:45" },
+          { t: "Nigerian Jollof for " + (n <= 3 ? "Small Family" : "Large Party"), d: "12:10" },
+          { t: "Quick Jollof Rice Under 30 Minutes", d: "5:30" }
+        ]
+      };
+    }
+  },
+
+  farming: {
+    q: "Oga farmer! 🌾 Which kain crop you wan plant?",
+    opts: [
+      { label: "Tomatoes 🍅", value: "tomatoes", emoji: "🍅" },
+      { label: "Maize / Corn 🌽", value: "maize", emoji: "🌽" },
+      { label: "Yam 🍠", value: "yam", emoji: "🍠" },
+      { label: "Vegetables 🥬", value: "vegetables", emoji: "🥬" }
+    ],
+    custom: { placeholder: "Or type your crop e.g. pepper, cassava" },
+    handler: function(q, answer, ctx) {
+      var crop = answer.toLowerCase();
+      var isTomato = /tomato/.test(crop);
+      var isMaize = /maize|corn/.test(crop);
+      var isYam = /yam/.test(crop);
+      var steps, intro;
+      if (isTomato) {
+        intro = "Tomato farming go pay you well well! 🍅💰 Nigeria need plenty tomatoes every day. Follow these steps to grow am properly:";
+        steps = [
+          "🌱 <strong>Choose your nursery bed</strong> — mix good soil with compost. Sow tomato seeds in small rows, 1cm deep. Keep moist for 4–6 weeks before transplanting.",
+          "🏡 <strong>Prepare your main farm</strong> — dig ridges or flat beds. Add NPK 15:15:15 fertilizer, one handful per planting hole. Space plants 60cm × 60cm apart.",
+          "🌿 <strong>Transplant your seedlings</strong> — move nursery plants when they reach 15–20cm tall. Water immediately after transplanting.",
+          "💧 <strong>Water regularly</strong> — tomatoes need water every 2–3 days. Too much water causes root rot; too little causes blossom drop.",
+          "🌻 <strong>Stake your plants</strong> — use sticks or ropes to support the plant as it grows tall. This prevents stem breakage.",
+          "🐛 <strong>Watch for pests</strong> — check leaves weekly for whiteflies, aphids, or early blight. Apply neem oil spray at first sign.",
+          "🧪 <strong>Apply fertilizer</strong> — use urea (nitrogen) 3 weeks after transplant to boost leaf growth. Switch to potassium-rich fertilizer at flowering stage.",
+          "🍅 <strong>Harvest when ripe</strong> — tomatoes turn red/orange when ready. Harvest every 2–3 days during peak season. Fresh tomatoes sell fast at market! 💸"
+        ];
+      } else if (isMaize) {
+        intro = "Maize farming na one of the fastest money crops in Nigeria! 🌽 Here na how to do am properly:";
+        steps = [
+          "📍 <strong>Pick the right season</strong> — plant maize at the start of rainy season (March–May in South, May–July in North). Maize needs 3–4 months of rain.",
+          "🌱 <strong>Prepare your seed</strong> — buy improved varieties like SAMMAZ-15 or OBA SUPER-2 from IITA or agro dealers. These give 2× more yield than local seeds.",
+          "🏗️ <strong>Prepare the land</strong> — clear weeds, plough or hoe the land deep. Make ridges or flat beds depending on your soil type.",
+          "🌽 <strong>Plant your seeds</strong> — plant 2 seeds per hole, 75cm between rows, 25cm between plants. Cover with 2–3cm of soil.",
+          "💧 <strong>Water if no rain</strong> — young maize (0–3 weeks) is very sensitive to drought. Water every 3 days if rainfall is low.",
+          "🌾 <strong>Apply fertilizer twice</strong> — NPK at planting, then urea (top-dress) when maize is knee-high (3–4 weeks old).",
+          "🐛 <strong>Control Fall Armyworm</strong> — check maize heart/leaves for FAW damage. This pest dey very common now in Nigeria. Spray Lambda-cyhalothrin early!",
+          "🌽 <strong>Harvest at right time</strong> — for fresh corn (roasting): harvest 70–80 days after planting. For dry grain: wait till husk turns brown (90–100 days). 💛"
+        ];
+      } else if (isYam) {
+        intro = "Yam na the king of crops in Nigeria! 🍠👑 This na how to plant and grow quality yam for good profit:";
+        steps = [
+          "🍠 <strong>Get good yam setts</strong> — use setts (seed yam) weighing 200–500g. Cut from healthy, disease-free tubers. Let cuts dry for 3–5 days before planting.",
+          "🏗️ <strong>Make big mounds</strong> — yam loves high mounds (60–90cm tall). This gives roots space to grow big tubers underground.",
+          "🌱 <strong>Plant early in the season</strong> — plant in February–March (before rains start). Bury setts 20cm deep, flat side up, one per mound.",
+          "💧 <strong>Mulch the mounds</strong> — cover mounds with dry leaves or grass after planting. This keeps moisture and controls weeds.",
+          "🪵 <strong>Stake your yam plants</strong> — once vines appear, provide 1.5–2m stakes. Yam vines must climb to produce big tubers.",
+          "🌿 <strong>Weed carefully</strong> — weed around mounds 3–4 times during the growing season. Do NOT disturb the mound surface too much.",
+          "🧪 <strong>Apply fertilizer once</strong> — use NPK 15:15:15 at 8 weeks after planting. Apply at the base of the mound, not directly on the plant.",
+          "🍠 <strong>Harvest with care</strong> — yam matures in 6–8 months. Use a fork to dig carefully — any cut on the tuber reduces market value. Store in dry, cool shade. 💸"
+        ];
+      } else {
+        intro = "Vegetables farming go give you fast cash! 🥬💚 You fit harvest within 4–8 weeks. Here na how to grow " + answer + " well:";
+        steps = [
+          "🌱 <strong>Choose a good plot</strong> — vegetables love well-drained soil with plenty organic matter. Avoid waterlogged areas.",
+          "🏗️ <strong>Make raised beds</strong> — raised beds 1–1.2m wide allow good drainage and easy weeding. Add compost to improve soil.",
+          "🌿 <strong>Prepare your seeds or seedlings</strong> — buy quality seeds from agro-dealers. For leafy veg, direct sow. For tomatoes/pepper, use nursery beds first.",
+          "💧 <strong>Water morning and evening</strong> — vegetables need consistent moisture. Drip irrigation saves water and reduces disease.",
+          "🌻 <strong>Thin your seedlings</strong> — when plants are 5cm tall, remove extras so remaining plants have enough space and nutrients.",
+          "🧪 <strong>Feed your crops</strong> — apply NPK 20:10:10 at 2 weeks after germination for leafy growth. Don't over-fertilize — it causes more leaves, less flavour.",
+          "🐛 <strong>Protect from pests daily</strong> — inspect every morning. Spray diluted neem oil every 7 days as prevention.",
+          "🥬 <strong>Harvest at right stage</strong> — most vegetables taste best when harvested young and tender. Sell quickly — fresh veg spoil fast! 💰"
+        ];
+      }
+      return {
+        intro: intro,
+        subtitle: answer.charAt(0).toUpperCase() + answer.slice(1) + " Farming Guide",
+        sub: "Step-by-step guide tailored for " + answer,
+        steps: steps,
+        videos: [
+          { t: answer + " Farming in Nigeria – Complete Guide", d: "11:20" },
+          { t: "How to Make Money from " + answer + " Farming", d: "9:30" },
+          { t: "Common " + answer + " Pests and How to Control Them", d: "7:15" },
+          { t: "Best " + answer + " Varieties for Nigerian Farmers", d: "6:40" }
+        ]
+      };
+    }
+  },
+
+  business: {
+    q: "Oya! 💼 Which kain business you dey think about?",
+    opts: [
+      { label: "Food / Catering 🍽️", value: "food business", emoji: "🍽️" },
+      { label: "Buying & Selling 🛍️", value: "trading", emoji: "🛍️" },
+      { label: "Online Business 📲", value: "online business", emoji: "📲" },
+      { label: "Skill / Service 🔧", value: "skill service", emoji: "🔧" }
+    ],
+    custom: { placeholder: "Or type your idea e.g. salon, transport" },
+    handler: function(q, answer, ctx) {
+      var biz = answer.toLowerCase();
+      var isFood = /food|cater|cook|restaurant|buka/.test(biz);
+      var isOnline = /online|digital|social/.test(biz);
+      var isSkill = /skill|service|repair|salon|barb|tailor/.test(biz);
+      var intro, steps;
+      if (isFood) {
+        intro = "Food business na the most reliable in Nigeria! 🍽️ Nigerians must chop every day! Here na how to start your own:";
+        steps = [
+          "💡 <strong>Define your niche</strong> — buka (local canteen), pepper soup spot, snacks & small chops, caterer for events, or delivery service? Pick one and focus!",
+          "📋 <strong>Create your menu</strong> — start with 3–5 dishes you can cook excellently. Master those before expanding. Quality over variety!",
+          "💰 <strong>Calculate your costs</strong> — write out cost of every ingredient per plate. Add 40–60% markup to get your selling price. Know your profit!",
+          "🏠 <strong>Start from your kitchen</strong> — no need for shop first. Cook at home, sell to neighbours, colleagues, and WhatsApp contacts. Reinvest profits.",
+          "📱 <strong>Market on WhatsApp and Instagram</strong> — post beautiful food photos daily. Offer free taste-test to 5 people and ask for reviews and referrals.",
+          "🧾 <strong>Register your food business</strong> — get NAFDAC registration if you package food. Get CAC name registration (₦10,000–25,000) for credibility.",
+          "📦 <strong>Manage your supply chain</strong> — buy ingredients in bulk from Mile 12, Bodija or your local market. Bulk buying reduces cost by 20–30%.",
+          "📈 <strong>Track every kobo</strong> — use a notebook or free app (Wave Accounting) to record daily sales and costs. This tells you if you're making money or not! 💸"
+        ];
+      } else if (isOnline) {
+        intro = "Online business na the future and that future don reach Nigeria! 📲🚀 You can start today with just your phone:";
+        steps = [
+          "📱 <strong>Choose your model</strong> — reselling (buy cheap, sell higher), dropshipping (sell without stock), digital products (e-books, graphics), or freelancing (sell your skills).",
+          "🛍️ <strong>Set up your store</strong> — create a free store on Jumia, Konga, or WhatsApp Business. Or use Instagram Shopping for fashion/beauty products.",
+          "📸 <strong>Create quality content</strong> — take clear, bright photos of your products. Good photos sell 3× better than bad ones. Use free app Snapseed for editing.",
+          "💬 <strong>Build a WhatsApp broadcast list</strong> — add every customer to a broadcast. Send new products, deals, and updates weekly. This na your free marketing!",
+          "🏦 <strong>Set up payments</strong> — use Paystack, Flutterwave, or Opay to receive money online safely. Give customers multiple payment options.",
+          "🚚 <strong>Sort your delivery</strong> — partner with GIG Logistics, Sendbox, or Kwik for deliveries. Always confirm payment before dispatching goods!",
+          "⭐ <strong>Build your reviews</strong> — after every sale, ask for feedback. Screenshot good reviews and post them. Social proof dey sell for you 24/7.",
+          "📊 <strong>Scale with paid ads</strong> — once you have N50k–N100k profit, invest ₦5,000–₦10,000 in Facebook/Instagram ads targeting your state. Watch your sales multiply! 🚀"
+        ];
+      } else if (isSkill) {
+        intro = "Skill-based business dey very profitable! 💪 People go always pay well for quality service. Here na how to monetize your skill properly:";
+        steps = [
+          "🎯 <strong>Define your exact service</strong> — be specific: not just 'tailoring' but 'ladies corporate wear' or 'school uniforms'. Niches pay more!",
+          "📸 <strong>Build a portfolio</strong> — take photos of your best work. Even 5 good photos on WhatsApp or Instagram can bring new customers daily.",
+          "💵 <strong>Set your prices confidently</strong> — research what others charge in your area. Price yourself at market rate or slightly higher if your quality is better.",
+          "🏠 <strong>Start where you are</strong> — work from home, rent a small space, or offer mobile service (go to customers). Low overhead = more profit.",
+          "📣 <strong>Tell everybody!</strong> — market your skill to family, church/mosque members, neighbours first. Word of mouth is your most powerful tool in Nigeria.",
+          "🤝 <strong>Partner with others</strong> — collaborate with complementary businesses. E.g. a tailor can partner with a fabric seller. Both parties gain customers!",
+          "📚 <strong>Improve your skill regularly</strong> — attend free YouTube tutorials, local training. Better skill = higher prices = more money.",
+          "📱 <strong>Get online presence</strong> — create a WhatsApp Business account with your services listed. Post before-and-after work photos weekly. Consistency builds trust! 💼"
+        ];
+      } else {
+        intro = "Buy and sell business na evergreen money in Nigeria! 🛍️💰 People always dey buy. Here na how to start and profit:";
+        steps = [
+          "🔍 <strong>Find a hot product</strong> — look at what people in your area always dey buy. Fast-moving goods (food, toiletries, phone accessories, fabric) are safest to start.",
+          "🏪 <strong>Source cheaply</strong> — buy from manufacturers, importers at Trade Fair Lagos, Onitsha Main Market, or Kano Kantin Kwari for textiles. Less middlemen = more profit.",
+          "💰 <strong>Start with small capital</strong> — test market with ₦10,000–50,000 first. See wetin sell fast, then buy more of those.",
+          "📍 <strong>Choose your selling point</strong> — roadside table, market stall, school gate, office compound, or online (WhatsApp). Location determines your customers!",
+          "📱 <strong>Use WhatsApp to sell</strong> — post your goods on WhatsApp Status every single day. Use clear photos and state prices. Serious buyers go message you.",
+          "🔄 <strong>Keep stock moving</strong> — turn your stock as fast as possible. Profit comes from volume, not from holding expensive stock for too long.",
+          "📝 <strong>Track profit per item</strong> — know exact cost and selling price for every product. This tells you which items to push harder.",
+          "🌱 <strong>Reinvest 70% of profit</strong> — don't spend all your profit. Put 70% back into more stock. That's how small trading becomes big business! 📈"
+        ];
+      }
+      return {
+        intro: intro,
+        subtitle: answer.charAt(0).toUpperCase() + answer.slice(1) + " Business Guide",
+        sub: "Tailored steps to start your " + answer,
+        steps: steps,
+        videos: [
+          { t: "How to Start " + answer + " in Nigeria", d: "11:30" },
+          { t: answer + " Business Tips for Beginners Nigeria", d: "9:45" },
+          { t: "How to Market Your " + answer + " on Social Media", d: "7:20" },
+          { t: "Making Real Money from " + answer + " in Nigeria", d: "8:00" }
+        ]
+      };
+    }
+  },
+
+  health: {
+    q: "Make I help you well! 💊 Wetin concern you most about your health?",
+    opts: [
+      { label: "Malaria 🦟", value: "malaria", emoji: "🦟" },
+      { label: "Diet & Eating 🥗", value: "diet", emoji: "🥗" },
+      { label: "Exercise & Fitness 🏃", value: "fitness", emoji: "🏃" },
+      { label: "General Wellness 🌿", value: "wellness", emoji: "🌿" }
+    ],
+    custom: { placeholder: "Or describe your health concern" },
+    handler: function(q, answer, ctx) {
+      var h = answer.toLowerCase();
+      var isMalaria = /malaria/.test(h);
+      var isDiet = /diet|eat|food|nutri/.test(h);
+      var isFitness = /exercise|fitness|gym|weight|run/.test(h);
+      var steps, intro;
+      if (isMalaria) {
+        intro = "Malaria dey kill people for Nigeria but e dey 100% preventable and treatable! 🦟💪 Let me show you how to protect yourself and your family:";
+        steps = [
+          "🛏️ <strong>Sleep under treated net every night</strong> — use Long-Lasting Insecticidal Net (LLIN) always, even when it's not hot. Anopheles mosquitoes bite between 10pm–5am.",
+          "🪣 <strong>Remove stagnant water near your home</strong> — check flower pots, tires, containers, and gutters weekly. Mosquitoes breed in ANY standing water, even bottle caps!",
+          "🌿 <strong>Use mosquito repellent</strong> — apply DEET-based repellent on exposed skin from evening. Burn mosquito coils or use plug-in repellents indoors.",
+          "👕 <strong>Dress protectively at dusk</strong> — wear long sleeves and trousers from 6pm–6am. Light-coloured clothes attract fewer mosquitoes.",
+          "🤒 <strong>Know the symptoms</strong> — fever, chills, headache, body pain, sweating. Symptoms appear 7–14 days after mosquito bite.",
+          "🏥 <strong>Test before treating</strong> — visit nearest PHC for a FREE rapid malaria test (RDT). NEVER take malaria medicine without confirming you have it first.",
+          "💊 <strong>Take correct treatment</strong> — use Artemisinin-based Combination Therapy (ACT) like Coartem or Lonart ONLY when confirmed. Take the FULL course — all 6 doses!",
+          "🍊 <strong>Eat and rest during recovery</strong> — drink plenty clean water, eat fruits and soft food. Most people recover fully within 3–5 days with correct treatment. 💪"
+        ];
+      } else if (isDiet) {
+        intro = "You are wetin you eat! 🥗 Nigeria get some of the most nutritious foods in the world — make we use them well for your health:";
+        steps = [
+          "🍽️ <strong>Build every meal with balance</strong> — include one carb (rice, yam, eba, fufu), one protein (beans, fish, meat, eggs), and one vegetable. That's your perfect plate!",
+          "🥗 <strong>Eat more vegetables</strong> — ugu (fluted pumpkin), waterleaf, bitter leaf, ewedu, and okra dey very rich in vitamins and minerals. Add to soups and stews daily.",
+          "🐟 <strong>Eat fish 3–4 times a week</strong> — tilapia, catfish, mackerel (titus) are excellent protein. Fish dey cheaper than meat and healthier for your heart.",
+          "🫘 <strong>Don't underestimate beans</strong> — moi moi, akara, gbegiri soup — beans dey full of protein, iron, and fibre. Eat beans at least 3× per week.",
+          "💧 <strong>Drink 8 glasses of water daily</strong> — most Nigerians dey dehydrated without knowing. Water helps digestion, skin, energy, and kidney health.",
+          "🚫 <strong>Reduce these killers</strong> — lower your palm oil, excess salt, sugary drinks (Fanta, Coke, energy drinks), and processed foods. These contribute to diabetes and hypertension.",
+          "🍌 <strong>Snack on fruits</strong> — pawpaw (papaya), banana, oranges, mangoes dey cheap and full of vitamins. Replace biscuits and chin-chin with fruit.",
+          "⏰ <strong>Eat at regular times</strong> — breakfast by 8am, lunch by 1–2pm, dinner by 7pm. Skipping meals especially breakfast makes you eat more later and gain weight! 🌟"
+        ];
+      } else if (isFitness) {
+        intro = "Exercise go change your life! 🏃💪 You no need gym or expensive equipment. Make I show you how to get fit the Nigerian way:";
+        steps = [
+          "🚶 <strong>Start with daily walking</strong> — walk 30 minutes every morning or evening. This alone can reduce blood pressure, improve mood, and control weight. Start tomorrow!",
+          "🏋️ <strong>Do bodyweight exercises at home</strong> — push-ups (chest, arms), squats (legs, glutes), planks (core), and jumping jacks. No gym needed — your body is your gym!",
+          "🕕 <strong>Exercise 3–5 days per week</strong> — consistency matters more than intensity. 20–30 mins three times a week is better than one 2-hour session.",
+          "⏰ <strong>Exercise in the morning</strong> — morning workouts give you energy for the day, boost metabolism, and you're less likely to skip them.",
+          "💧 <strong>Hydrate during exercise</strong> — drink water before, during, and after. In Nigerian heat, you lose water fast. Dehydration kills performance!",
+          "🥗 <strong>Eat to support your exercise</strong> — eat a light meal 1–2 hours before workout. After exercise, eat protein within 30 minutes (eggs, beans, or milk). This builds muscle!",
+          "😴 <strong>Rest and recover</strong> — your body grows stronger during rest, not during exercise. Sleep 7–8 hours and take at least 1 rest day between hard sessions.",
+          "📊 <strong>Track your progress</strong> — write down what you do each week. When you see progress (better endurance, less breathlessness on stairs), na motivation to continue! 🏆"
+        ];
+      } else {
+        intro = "Overall wellness na the goal! 🌿 Make I show you the daily habits that go keep you healthy, energetic and happy in Nigeria:";
+        steps = [
+          "☀️ <strong>Start your day with purpose</strong> — wake up at consistent time, drink a glass of clean water before anything else. Your body dey dehydrated after sleep.",
+          "🏃 <strong>Move your body daily</strong> — 20–30 mins of walking, jogging, or exercise keeps your heart strong and mind sharp. This na your cheapest medicine.",
+          "🥗 <strong>Eat balanced local foods</strong> — Nigeria get amazing nutritious foods. Beans, ugu, fish, brown rice, fruits. Cook with less oil and less salt.",
+          "💧 <strong>Drink 2 litres of water daily</strong> — not just when you're thirsty. Proper hydration prevents headaches, kidney stones, UTIs, and fatigue.",
+          "😴 <strong>Protect your sleep</strong> — sleep 7–8 hours consistently. Turn off phones at least 30 mins before bed. Good sleep repairs your entire body.",
+          "🧠 <strong>Care for your mental health</strong> — talk to trusted family or friends when stressed. Pray, meditate, or rest. Nigerian stress dey real — manage am proactively.",
+          "🏥 <strong>Get regular checkups</strong> — blood pressure, blood sugar, eye check. Many serious illnesses dey start silently. Early detection saves lives and money.",
+          "🚭 <strong>Avoid these 4 killers</strong> — smoking, excess alcohol, street drugs, and unprotected sex. These four things dey responsible for majority of premature deaths in Nigeria. 💚"
+        ];
+      }
+      return {
+        intro: intro,
+        subtitle: answer.charAt(0).toUpperCase() + answer.slice(1) + " Health Guide",
+        sub: "Personalised health advice for you",
+        steps: steps,
+        videos: [
+          { t: answer + " Tips and Advice for Nigerians", d: "7:40" },
+          { t: "How to Stay Healthy in Nigeria – " + answer, d: "8:15" },
+          { t: "Nigerian Doctor Explains " + answer, d: "6:30" },
+          { t: "Common " + answer + " Mistakes Nigerians Make", d: "9:00" }
+        ]
+      };
+    }
+  },
+
+  maths: {
+    q: "No problem! ➕ Which level you dey? 🎓",
+    opts: [
+      { label: "Primary (Basic) 📚", value: "primary", emoji: "📚" },
+      { label: "JSS / Junior 🎒", value: "junior secondary", emoji: "🎒" },
+      { label: "SSS / WAEC 📝", value: "waec", emoji: "📝" },
+      { label: "Adult (everyday maths) 🧮", value: "everyday maths", emoji: "🧮" }
+    ],
+    handler: function(q, answer, ctx) {
+      var lvl = answer.toLowerCase();
+      var isPrimary = /primary|basic|child/.test(lvl);
+      var isWAEC = /waec|sss|senior|ss/.test(lvl);
+      var isEveryday = /everyday|adult|daily/.test(lvl);
+      var steps, intro;
+      if (isPrimary) {
+        intro = "Primary school maths dey very important — e na the foundation of everything! 📚 Make we start from the very beginning:";
+        steps = [
+          "🔢 <strong>Learn to count properly</strong> — count from 1 to 100 forward AND backward every day. Clap while counting to make it fun! 👏",
+          "➕ <strong>Addition (plus)</strong> — start with single digits: 3 + 4 = 7. Use your fingers or draw circles. Practice 5 sums every day.",
+          "➖ <strong>Subtraction (minus)</strong> — if you have 8 oranges and give away 3, you have 5 left. Practise with real objects — stones, beans, bottle caps!",
+          "✖️ <strong>Multiplication tables</strong> — learn 1×1 to 5×5 first. Sing them like a song every morning. Then tackle 6×6 to 12×12.",
+          "➗ <strong>Division (sharing)</strong> — 12 biscuits shared among 4 children = 3 each. Always think of sharing when you see division.",
+          "🔵 <strong>Shapes</strong> — circle, square, triangle, rectangle. Draw them, find them in your environment (room, window, book).",
+          "📏 <strong>Measurement</strong> — learn centimetres and metres. Use a ruler to measure real things around you. Maths lives in real life!",
+          "📝 <strong>Practice daily with exercises</strong> — do 10 sums every morning before school. Make it fun with a prize for yourself when you get them all right! 🏆"
+        ];
+      } else if (isWAEC) {
+        intro = "WAEC Maths dey possible to pass! 💪 Plenty students fail because of fear, not because e hard. Make I show you exactly how to prepare:";
+        steps = [
+          "📚 <strong>Get the official WAEC syllabus</strong> — download or buy WAEC Mathematics syllabus. Only study topics that appear in exams. Don't waste time on anything outside it.",
+          "📖 <strong>Buy 5-year past question books</strong> — get WAEC and NECO past questions from 2018–2023. These books na your most important preparation tool — period!",
+          "🗂️ <strong>Master these core topics first</strong> — Number & Numeration, Algebra, Mensuration (areas & volumes), Statistics, Geometry. These topics appear every year!",
+          "✏️ <strong>Solve 5 past questions daily</strong> — do this consistently for 3 months before exam. Not once a week — EVERY day. Repetition builds speed and confidence.",
+          "📐 <strong>Practice showing full working</strong> — in WAEC, you get marks for working even if final answer is wrong. NEVER just write the answer alone!",
+          "⏱️ <strong>Do timed practice</strong> — WAEC Maths = 2½ hours for ~60 questions. Practice solving papers within the time limit so you don't panic on exam day.",
+          "👥 <strong>Form or join a study group</strong> — studying with 2–4 others helps you understand faster. Explain topics to each other — teaching deepens understanding!",
+          "🧘 <strong>On exam day — stay calm</strong> — read every question carefully. Start with what you know first. Show full working. Check time every 30 mins. You go scale! ✅"
+        ];
+      } else if (isEveryday) {
+        intro = "Everyday maths dey follow us everywhere — market, business, cooking! 🧮 Make I show you the practical skills you really need:";
+        steps = [
+          "💵 <strong>Calculate change at the market</strong> — if item costs ₦2,350 and you give ₦5,000: change = 5000 – 2350 = ₦2,650. Always count your change before leaving!",
+          "📊 <strong>Understand percentage</strong> — 10% of ₦50,000 = ₦5,000. If something is '20% discount', multiply price by 0.8 to get new price. Use this for business and shopping.",
+          "💰 <strong>Calculate profit and loss</strong> — Profit = Selling Price – Cost Price. If you buy for ₦3,000 and sell for ₦4,200, profit = ₦1,200 (that's 40% markup).",
+          "📐 <strong>Measure for building or sewing</strong> — learn to use a tape measure. Know that 100cm = 1 metre. For fabric: women's dress needs ~3–4 yards, shirt ~2 yards.",
+          "🏦 <strong>Calculate interest on loans</strong> — Simple interest = Principal × Rate × Time ÷ 100. If you borrow ₦100,000 at 5% per month for 6 months: interest = ₦30,000. Always calculate before signing!",
+          "🍽️ <strong>Scale recipes</strong> — if recipe is for 4 people but you cook for 10: multiply every ingredient by 2.5 (10 ÷ 4 = 2.5). All measurements scale the same way.",
+          "📱 <strong>Use calculator apps wisely</strong> — your phone calculator can do all these. But understand the concept first — so you know if the answer looks right or wrong.",
+          "✍️ <strong>Practice with real money</strong> — before you sleep each night, count and record your daily income and expenses. This builds financial intelligence! 💡"
+        ];
+      } else {
+        intro = "Junior Secondary maths dey build on your primary school foundation. 🎒 Let me show you the key topics and how to master them:";
+        steps = [
+          "🔢 <strong>Master whole numbers and integers</strong> — understand positive and negative numbers on a number line. Practise adding and subtracting negative numbers.",
+          "✖️ <strong>Perfect your algebra basics</strong> — solve for x: if 3x = 12, then x = 4. Algebra is just detective work with numbers. Stay calm and work step by step.",
+          "📐 <strong>Learn basic geometry</strong> — angles in a triangle = 180°. Angles on a straight line = 180°. Draw shapes and label them — visual learning works best here!",
+          "📊 <strong>Study fractions and ratios</strong> — simplify fractions, find common denominators, and understand ratio e.g. 2:3 means for every 2 parts, there are 3 parts of the other.",
+          "🔵 <strong>Perimeter and area</strong> — Area of rectangle = length × width. Area of triangle = ½ × base × height. Practise with real measurements in your room.",
+          "📈 <strong>Learn to read graphs</strong> — bar charts, pie charts, line graphs appear in every exam. Practice drawing AND reading them from given data tables.",
+          "💡 <strong>Do JSS common entrance past questions</strong> — buy past question booklets from your school or local bookshop. Practice under timed conditions weekly.",
+          "👩‍🏫 <strong>Ask your teacher for help early</strong> — don't wait till exam week. If you don't understand a topic, ask immediately. One unclear concept dey block many others! 🚀"
+        ];
+      }
+      return {
+        intro: intro,
+        subtitle: answer.charAt(0).toUpperCase() + answer.slice(1) + " Mathematics",
+        sub: "Tailored maths guide for your level",
+        steps: steps,
+        videos: [
+          { t: "Mathematics for " + answer + " Students Nigeria", d: "13:20" },
+          { t: answer + " Maths Explained Simply Step by Step", d: "16:40" },
+          { t: "How to Improve at " + answer + " Maths Fast", d: "8:00" },
+          { t: "Common " + answer + " Maths Mistakes to Avoid", d: "11:15" }
+        ]
+      };
+    }
+  }
+};
+
+/* ============================================================
+   CHAT UI HELPERS
+   ============================================================ */
+function addBotMsg(html, delay) {
+  delay = delay || 0;
+  return new Promise(function(resolve) {
+    var flow = document.getElementById('chat-flow');
+    // typing indicator
+    var typing = document.createElement('div');
+    typing.className = 'chat-msg';
+    typing.innerHTML = '<div class="chat-avatar bot">🤖</div><div class="chat-bubble bot"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+    flow.appendChild(typing);
+    flow.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    setTimeout(function() {
+      typing.querySelector('.chat-bubble').innerHTML = html;
+      resolve();
+    }, delay || 800);
+  });
+}
+
+function addUserMsg(text) {
+  var flow = document.getElementById('chat-flow');
+  var div = document.createElement('div');
+  div.className = 'chat-msg user-msg';
+  div.style.animationDelay = '0s';
+  div.innerHTML = '<div class="chat-avatar usr">👤</div><div class="chat-bubble usr">' + text + '</div>';
+  flow.appendChild(div);
+}
+
+function showFollowupOptions(topicKey, query) {
+  var fup = FOLLOWUPS[topicKey];
+  if (!fup) return false;
+  var zone = document.getElementById('followup-zone');
+  var wrap = document.getElementById('followup-options-wrap');
+  wrap.innerHTML = '';
+
+  // Quick-pick buttons
+  if (fup.opts) {
+    var optDiv = document.createElement('div');
+    optDiv.className = 'followup-options';
+    fup.opts.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'fup-btn';
+      btn.innerHTML = opt.emoji + ' ' + opt.label;
+      btn.onclick = function() {
+        selectFollowup(topicKey, query, opt.value, opt.label);
+      };
+      optDiv.appendChild(btn);
+    });
+    wrap.appendChild(optDiv);
+  }
+
+  // Custom free-text
+  if (fup.custom) {
+    var row = document.createElement('div');
+    row.className = 'fup-custom';
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.placeholder = fup.custom.placeholder || 'Type your answer…';
+    inp.id = 'fup-custom-input';
+    inp.onkeydown = function(e) { if (e.key === 'Enter') submitCustomFup(topicKey, query); };
+    var btn = document.createElement('button');
+    btn.textContent = 'Go →';
+    btn.onclick = function() { submitCustomFup(topicKey, query); };
+    row.appendChild(inp);
+    row.appendChild(btn);
+    wrap.appendChild(row);
+  }
+
+  zone.classList.remove('hidden');
+  setTimeout(function() { zone.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
+  return true;
+}
+
+function submitCustomFup(topicKey, query) {
+  var val = (document.getElementById('fup-custom-input') || {}).value || '';
+  val = val.trim();
+  if (!val) return;
+  selectFollowup(topicKey, query, val, val);
+}
+
+function selectFollowup(topicKey, query, value, displayLabel) {
+  // Lock options
+  document.getElementById('followup-zone').classList.add('hidden');
+  // Show user reply
+  addUserMsg(displayLabel);
+  // Show loading bars
+  var loadSec = document.getElementById('loading-sec');
+  loadSec.classList.remove('hidden');
+  setTimeout(function() {
+    loadSec.classList.add('hidden');
+    var fup = FOLLOWUPS[topicKey];
+    var result = fup.handler(query, value, {});
+    // Bot confirms
+    addBotMsg(result.intro, 600).then(function() {
+      setTimeout(function() {
+        renderStepsAndVideos(result, query);
+      }, 300);
+    });
+  }, 1200);
+}
+
+var LC={
+  en:{p:'What do you want to learn today? e.g. How to farm, Maths…',l:'Finding best answer for you…',vs:'Listening… Talk now!',vh:'Say what you want to learn, e.g. "How to plant tomato"',dy:'Turn on <strong>Low Bandwidth Mode</strong> above to strip images and animations. ALearn delivers knowledge no matter your connection. 🇳🇬'},
+  pidgin:{p:'Wetin you wan learn today? e.g. How to farm, Maths…',l:'We dey find answer for you… wait small…',vs:'Talk now! We dey listen!',vh:'Talk wetin you wan learn, e.g. "How I go plant tomato"',dy:'On <strong>Low Bandwidth Mode</strong> to save your data. You go still learn well well! 🇳🇬'},
+  ha:{p:'Me kuke son koya yau? Yadda ake noma…',l:'Muna neman amsa muku…',vs:'Muna sauraro… yi magana yanzu!',vh:'Faɗi abin da kuke son koyo, misali "Yadda ake shuka tumatir"',dy:'Kunna <strong>Low Bandwidth Mode</strong> don adana bayananka. 🇳🇬'},
+  ig:{p:'Gịnị chọrọ ịmụta taa? Otu esi ọrụ ugbo…',l:'Anyị na-achọ azịza gị…',vs:'Na-egekali ntị… kwuo ugbu a!',vh:'Kwuo ihe ọ bụ ịmụta, dịka "Otu esi akọ tomato"',dy:'Gbanye <strong>Low Bandwidth Mode</strong> ichekwa data gị. 🇳🇬'},
+  yo:{p:'Kini o fẹ kọ loni? Bii o ṣe le ṣe ogbin…',l:'A n wa idahun fun ọ…',vs:'A n gbọ… sọ bayi!',vh:'Sọ ohun ti o fẹ kọ, fun apẹẹrẹ "Bii o ṣe le gbin tomati"',dy:'Tan <strong>Low Bandwidth Mode</strong> lati fi data pamọ. 🇳🇬'}
+};
+
+var KB={
+  default:{
+    en:{i:"No wahala! I found something good for '{t}'. Let me break am down for you step by step — clear and simple. Make we start! 🚀",
+      s:["<strong>Understand what '{t}' means</strong> — spend a few minutes reading about it before you start. Knowledge begins with curiosity!","<strong>Gather what you need</strong> — list out your tools, materials, or resources. Preparation na 50% of the work!","<strong>Start with the basics</strong> — every expert was once a beginner. Take the first step without fear.","<strong>Practice what you learn</strong> — try it yourself immediately. Hands-on practice helps memory 10x more than reading alone.","<strong>Ask for help</strong> when you're stuck — no shame in asking. Even the wisest elders seek counsel.","<strong>Be consistent daily</strong> — small progress every day will compound into mastery. Consistency na the real key!","<strong>Teach someone else</strong> — share your knowledge with family or community. That's how Nigeria rises together! 🇳🇬"],
+      v:[{t:"Introduction to {t} – Beginner Guide",d:"5:30"},{t:"{t} Full Tutorial in Simple English",d:"12:45"},{t:"Practical {t} Tips for Nigerians",d:"8:10"},{t:"{t} – Answered Simply for You",d:"4:20"}]},
+    pidgin:{i:"No wahala! I find something good for '{t}'. Make I break am down for you step by step — clear clear. Make we start! 🚀",
+      s:["<strong>First sabi wetin '{t}' mean</strong> — spend small time to understand am before you start.","<strong>Gather your things</strong> — list out wetin you need. Preparation dey very important!","<strong>Start from the beginning</strong> — every big person start small. No fear am!","<strong>Practice wetin you learn</strong> — try am yourself. That na the best way to remember.","<strong>Ask for help</strong> if you no understand — no shame, e go make you sabi more!","<strong>Do am every day</strong> — small small you go become expert. Consistency na the key!","<strong>Teach someone else</strong> — share your knowledge with family. That na how Nigeria go grow! 🇳🇬"],
+      v:[{t:"How to Understand {t} – Simple Tutorial",d:"5:30"},{t:"{t} – Full Guide for Beginners",d:"12:45"},{t:"Practical {t} Tips for Nigerians",d:"8:10"},{t:"{t} – Common Questions Answered",d:"4:20"}]}
+  },
+  farming:{en:{i:"Ehen! Farming na one of the most important skills in Nigeria and you don choose well! Let me show you how to start properly. 🌾",
+    s:["<strong>Choose good land</strong> — test soil by squeezing a handful; it should hold shape but not be too sticky or sandy.","<strong>Select the right crops</strong> — tomatoes, pepper, maize, cowpea, and vegetables are great starters depending on your region.","<strong>Prepare the soil properly</strong> — clear weeds, loosen earth with hoe or tractor, then add compost or organic matter for nutrients.","<strong>Plant with correct spacing</strong> — give each plant enough room to breathe and grow. Water immediately after planting.","<strong>Water consistently</strong> — morning and evening when there's no rain. Drip irrigation saves water in dry northern areas.","<strong>Apply fertilizer smartly</strong> — use NPK 15:15:15 in early growth stage, then urea for leafy crops. Follow dosage instructions.","<strong>Inspect for pests weekly</strong> — catch problems early. Use organic methods first (neem oil, ash) before chemical pesticides.","<strong>Harvest at the right time</strong> — don't harvest too early or too late. Right timing = maximum yield and better market price! 🥬"],
+    v:[{t:"Modern Farming Techniques in Nigeria",d:"9:45"},{t:"How to Start a Small Farm – Practical Guide",d:"14:20"},{t:"Organic Farming Tips for Nigerian Climate",d:"7:30"},{t:"Profitable Crops to Grow in Nigeria",d:"6:15"}]}},
+  jollof:{en:{i:"Ah, Jollof Rice! The undisputed pride of West Africa — and Nigeria's own na the best! 😄 Let me show you how to cook the perfect party jollof, step by step!",
+    s:["<strong>Gather your ingredients</strong> — 2 cups long grain rice, 6 fresh tomatoes, 3 tatashe (red bell pepper), 2–4 scotch bonnet, 2 onions, 2 tbsp tomato paste, 1.5 cups chicken/beef stock, vegetable oil, seasoning cubes, bay leaves, curry, thyme, salt.","<strong>Blend your pepper base</strong> — blend tomatoes, tatashe, and scotch bonnet together until very smooth.","<strong>Fry the base well</strong> — heat oil, fry diced onions golden, add tomato paste and fry 5 mins, then add blended pepper. Fry 20–30 mins until raw smell completely disappears.","<strong>Season the pot</strong> — add stock, seasoning cubes, curry, thyme, bay leaves, and salt. Taste and adjust.","<strong>Add your washed rice</strong> — rinse rice thoroughly until water runs clear, then stir into the pot until every grain is coated.","<strong>Low heat + foil method</strong> — cover pot tightly with aluminium foil first, THEN the lid. Cook on low heat 30–40 mins. This creates the smoky party jollof effect!","<strong>Stir gently halfway through</strong> — after 20 mins, stir from the bottom to prevent burning. Add a splash of hot water if too dry.","<strong>Serve and enjoy!</strong> — dish with fried chicken, dodo (plantain), coleslaw. Naija jollof for the win! 🍛🎉"],
+    v:[{t:"How to Cook Nigerian Party Jollof Rice",d:"10:20"},{t:"Perfect Jollof Rice – Secret Tips Revealed",d:"8:45"},{t:"Nigerian Jollof Rice Complete Tutorial",d:"12:10"},{t:"Quick Jollof Rice Under 30 Minutes",d:"5:30"}]}},
+  business:{en:{i:"Oya! You wan start business? That's a very wise decision, my friend! Nigeria is full of opportunity — from Lagos Island to Sabon Gari. Let me show you how to build yours today! 💼",
+    s:["<strong>Find your idea</strong> — what skill, knowledge, or passion do you have? The best businesses solve a real problem people around you face daily.","<strong>Research your market</strong> — who are your customers? How much will they pay? Who are your competitors? Know before you go!","<strong>Write a one-page business plan</strong> — just one page: what you sell, who buys it, your costs, and how you make profit.","<strong>Start with what you have</strong> — many iconic Nigerian brands started with ₦5,000 or less. Capital dey grow with action.","<strong>Register your business officially</strong> — go to cacregistration.gov.ng (CAC) to register. It builds trust and opens banking doors.","<strong>Open a dedicated business account</strong> — use Kuda, Opay, GTBank, or any bank. NEVER mix personal and business money.","<strong>Market with social media</strong> — post on WhatsApp Status, Facebook, Instagram. Video content gets the most reach for free.","<strong>Keep clear financial records</strong> — write every income and expense in a notebook or Excel. Good records = smarter decisions and easier loans! 📒"],
+    v:[{t:"How to Start a Business in Nigeria – Full Guide",d:"11:30"},{t:"Low Capital Business Ideas in Nigeria",d:"9:45"},{t:"How to Register Business with CAC Online",d:"7:20"},{t:"Social Media Marketing for Nigerian Businesses",d:"8:00"}]}},
+  health:{en:{i:"Your health na your greatest wealth! As we say — 'Ọ dị mma' (It is well). Let me share the most important tips to keep you and your family strong and healthy! 💪",
+    s:["<strong>Drink clean water daily</strong> — at least 8 glasses (2 litres). Boil or filter water from any source you're unsure about.","<strong>Wash hands correctly</strong> — before eating, after toilet, after handling animals or dirty surfaces. Soap + 20 seconds minimum.","<strong>Eat balanced meals every day</strong> — protein (beans, fish, eggs), carbohydrates (rice, yam, garri), and greens/vegetables. Balance na everything.","<strong>Sleep enough hours</strong> — adults need 7–8 hours, children need 9–11 hours. Sleep repairs your body and sharpens your mind.","<strong>Exercise regularly</strong> — 30 minutes of brisk walking daily is enough. No gym, no equipment needed. Your body will thank you.","<strong>Visit your PHC regularly</strong> — Primary Health Centres near you offer free or cheap consultations. Prevention is cheaper than treatment.","<strong>Protect against malaria</strong> — sleep under treated mosquito nets, clear stagnant water around your home, and treat fever early with proper antimalarials.","<strong>Protect your mental health too</strong> — talk to a trusted person when you feel overwhelmed. You no dey alone. Mental health matters! 🧠💚"],
+    v:[{t:"Essential Health Tips Every Nigerian Should Know",d:"7:40"},{t:"Malaria Prevention & Treatment in Nigeria",d:"8:15"},{t:"Eating Healthy on a Budget – Nigerian Foods",d:"6:30"},{t:"Understanding Common Illnesses in Nigeria",d:"9:00"}]}},
+  maths:{en:{i:"Mathematics! The universal language — and your secret weapon for success in school and business! No fear at all, I go break it down so clear that everybody go understand! 😄",
+    s:["<strong>Master counting and basics</strong> — practice counting 1–1000, addition, and subtraction every day. These are the foundation of everything else.","<strong>Memorise your times tables</strong> — learn 1×1 to 12×12 by heart. Write them out, chant them, quiz yourself daily until they flow automatically.","<strong>Understand fractions</strong> — cut a bread into 4 equal parts: each piece = ¼ (one quarter). Practice with real objects around you.","<strong>Learn decimals and percentages</strong> — 0.5 is the same as ½. 25% means 25 out of 100. You use these every time you shop!","<strong>Conquer basic algebra</strong> — algebra is just number puzzles: x + 5 = 12 means x = 7. Start simple. Build confidence through practice.","<strong>Apply maths to real life</strong> — calculate market change, measure cooking ingredients, track savings. That's practical mathematics that sticks!","<strong>Grind past questions daily</strong> — buy WAEC or NECO past question books. Solve 5–10 questions every day. Consistency beats talent! 📐"],
+    v:[{t:"Mathematics for Beginners – Nigeria Curriculum",d:"13:20"},{t:"WAEC Maths Explained Simply – Past Questions",d:"16:40"},{t:"Times Tables Fun Method – Kids & Adults",d:"8:00"},{t:"Algebra Made Easy – Nigerian Students",d:"11:15"}]}},
+  smartphone:{en:{i:"Welcome to the digital world! A smartphone is your most powerful tool today — knowing how to use it well will open doors for you. Make I show you everything step by step! 📱",
+    s:["<strong>Know your phone's parts</strong> — touchscreen (front), home/back buttons, volume buttons (side), camera (back), charging port (bottom), SIM card slot (side).","<strong>Make and receive calls</strong> — tap the phone icon, dial the number, press call (green). To receive: slide or tap the green answer button.","<strong>Send messages on WhatsApp</strong> — open WhatsApp, tap the chat or pencil icon, search a contact name, type your message, press send (arrow icon).","<strong>Connect to internet</strong> — go to Settings → WiFi to connect to wireless. Or pull down from top → tap Mobile Data to use your Airtel data.","<strong>Download apps safely</strong> — only use Google Play Store (Android) or App Store (iPhone). Never install from unknown websites — e fit get virus!","<strong>Protect your phone and money</strong> — NEVER share PIN, password, OTP, or bank details with anyone — even if they claim to be from your bank or Airtel!","<strong>Charge your battery the right way</strong> — plug in when below 20%, unplug around 85–90%. Don't sleep with it charging on your bed."],
+    v:[{t:"Smartphone Basics for Beginners – Nigeria Edition",d:"10:30"},{t:"How to Stay Safe Online in Nigeria",d:"8:50"},{t:"Best Free Apps for Nigerians",d:"7:20"},{t:"WhatsApp Complete Tutorial for Beginners",d:"12:00"}]}}
+};
+
+function detect(q){
+  q=q.toLowerCase();
+  if(/farm|crop|plant|grow|noma|agric/.test(q)) return 'farming';
+  if(/jollof|cook|food|rice|eba|stew/.test(q)) return 'jollof';
+  if(/business|entrepren|money|trade|shop|sell/.test(q)) return 'business';
+  if(/health|sick|malaria|medicine|hospital|doctor/.test(q)) return 'health';
+  if(/math|number|algebra|calcul|waec|neco/.test(q)) return 'maths';
+  if(/smartphone|phone|android|iphone|whatsapp|internet/.test(q)) return 'smartphone';
+  return 'default';
+}
+
+function setSearch(t){ document.getElementById('search-input').value=t; doSearch(); }
+
+function doSearch(){
+  var q=document.getElementById('search-input').value.trim();
+  if(!q) return;
+
+  // Reset state
+  CONV_STATE = { topic: null, query: q, answered: false, context: {} };
+
+  // Hide browse, show results container
+  document.getElementById('browse-sec').classList.add('hidden');
+  document.getElementById('loading-sec').classList.remove('hidden');
+  document.getElementById('results-sec').classList.add('hidden');
+  document.getElementById('steps-card').classList.add('hidden');
+  document.getElementById('vids-card').style.display='none';
+  document.getElementById('chat-flow').innerHTML='';
+  document.getElementById('followup-zone').classList.add('hidden');
+  document.getElementById('followup-options-wrap').innerHTML='';
+
+  var tk = detect(q);
+  CONV_STATE.topic = tk;
+  document.getElementById('result-title').textContent = q.charAt(0).toUpperCase() + q.slice(1);
+
+  setTimeout(function(){
+    document.getElementById('loading-sec').classList.add('hidden');
+    document.getElementById('results-sec').classList.remove('hidden');
+    document.getElementById('results-sec').scrollIntoView({behavior:'smooth',block:'start'});
+
+    var hasFup = FOLLOWUPS[tk];
+    if (hasFup) {
+      // Conversational flow — ask follow-up first
+      addBotMsg("Ehen! 🙌 You searched for <strong>" + q + "</strong>. Make I help you proper proper! 😊", 700).then(function(){
+        setTimeout(function(){
+          addBotMsg(hasFup.q, 900).then(function(){
+            showFollowupOptions(tk, q);
+          });
+        }, 400);
+      });
+    } else {
+      // Direct render for topics without a follow-up
+      var la=(LANG==='pidgin')?'pidgin':'en';
+      var td=(KB[tk]&&KB[tk][la])||(KB[tk]&&KB[tk].en)||KB.default[la]||KB.default.en;
+      addBotMsg("Ehen! 🙌 You searched for <strong>" + q + "</strong>. No worry — I don find am for you! 🚀", 700).then(function(){
+        setTimeout(function(){
+          addBotMsg(td.i.replace(/\{t\}/g, q), 900).then(function(){
+            setTimeout(function(){
+              renderStepsAndVideos({
+                subtitle: q,
+                sub: 'Follow each step carefully',
+                steps: td.s.map(function(s){ return s.replace(/\{t\}/g, q); }),
+                videos: td.v.map(function(v){ return {t: v.t.replace(/\{t\}/g,q), d: v.d}; })
+              }, q);
+            }, 300);
+          });
+        }, 400);
+      });
+    }
+  }, 1000);
+}
+
+function renderStepsAndVideos(result, query) {
+  // Steps card
+  var stepsCard = document.getElementById('steps-card');
+  document.getElementById('steps-card-title').textContent = result.subtitle || query;
+  document.getElementById('steps-card-sub').textContent = result.sub || 'Follow each step carefully';
+  var sl = document.getElementById('steps-list');
+  sl.innerHTML = '';
+  result.steps.forEach(function(s, i){
+    var li = document.createElement('li');
+    li.className = 'step';
+    li.style.animationDelay = (i * 0.07) + 's';
+    li.innerHTML = '<div class="step-num">' + (i+1) + '</div><div class="step-body">' + s + '</div>';
+    sl.appendChild(li);
+  });
+  stepsCard.classList.remove('hidden');
+
+  // Videos card
+  var vg = document.getElementById('vids-grid');
+  vg.innerHTML = '';
+  var grads = [
+    'linear-gradient(135deg,#1a0a0a,#3a1515)',
+    'linear-gradient(135deg,#0a1a0a,#153a15)',
+    'linear-gradient(135deg,#0a0a1a,#15153a)',
+    'linear-gradient(135deg,#1a1a0a,#3a3a15)'
+  ];
+  if(BW){
+    var note = document.createElement('p');
+    note.style = 'font-size:0.85rem;color:var(--text3);margin-bottom:0.75rem;';
+    note.textContent = '📡 Low Bandwidth Mode — tap titles to open YouTube:';
+    vg.appendChild(note);
+    result.videos.forEach(function(v){
+      var a = document.createElement('a');
+      a.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(v.t);
+      a.target = '_blank';
+      a.style = 'display:block;padding:8px 0;color:#E8202A;font-size:0.88rem;font-weight:600;text-decoration:none;border-bottom:1px solid var(--border);';
+      a.textContent = '▶ ' + v.t + ' (' + v.d + ')';
+      vg.appendChild(a);
+    });
+  } else {
+    result.videos.forEach(function(v, i){
+      var d = document.createElement('div');
+      d.className = 'vid-card';
+      d.setAttribute('role','button');
+      d.setAttribute('tabindex','0');
+      d.setAttribute('aria-label','Watch: ' + v.t);
+      d.onclick = function(){ window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent(v.t), '_blank'); };
+      d.innerHTML = '<div class="vid-thumb"><div class="vid-thumb-bg" style="background:' + grads[i % 4] + '"></div><div class="vid-play">▶</div></div><div class="vid-info"><div class="vid-title">' + v.t + '</div><div class="vid-dur">⏱ ' + v.d + '</div></div>';
+      vg.appendChild(d);
+    });
+  }
+  document.getElementById('vids-card').style.display = '';
+  setTimeout(function(){
+    stepsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+}
+
+function clearResults(){
+  document.getElementById('results-sec').classList.add('hidden');
+  document.getElementById('steps-card').classList.add('hidden');
+  document.getElementById('vids-card').style.display='none';
+  document.getElementById('browse-sec').classList.remove('hidden');
+  document.getElementById('loading-sec').classList.add('hidden');
+  document.getElementById('chat-flow').innerHTML='';
+  document.getElementById('followup-zone').classList.add('hidden');
+  document.getElementById('search-input').value='';
+  CONV_STATE = { topic: null, query: null, answered: false, context: {} };
+  document.getElementById('hero').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function setLang(l){
+  LANG=l;
+  var lc=LC[l]||LC.en;
+  document.getElementById('search-input').placeholder=lc.p;
+  document.getElementById('did-you-know').innerHTML=lc.dy;
+  document.getElementById('vstatus').textContent=lc.vs;
+  document.getElementById('vhint').textContent=lc.vh;
+}
+
+function setMode(m){
+  MODE=m;
+  document.getElementById('adult-btn').classList.toggle('active',m==='adult');
+  document.getElementById('child-btn').classList.toggle('active',m==='child');
+  document.getElementById('adult-btn').setAttribute('aria-pressed',String(m==='adult'));
+  document.getElementById('child-btn').setAttribute('aria-pressed',String(m==='child'));
+  document.body.classList.toggle('child',m==='child');
+  document.getElementById('mode-indicator').textContent=m==='child'?'👶 Child Mode':'👨 Adult Mode';
+}
+
+function toggleBW(){
+  BW=!BW;
+  document.body.classList.toggle('lowbw',BW);
+  var btn=document.getElementById('bw-btn');
+  btn.classList.toggle('on',BW);
+  document.getElementById('bw-label').textContent=BW?'Low BW: ON':'Low Bandwidth';
+}
+
+function toggleTheme(){
+  DARK=!DARK;
+  document.documentElement.setAttribute('data-theme',DARK?'dark':'light');
+  document.getElementById('sun-icon').style.display=DARK?'none':'block';
+  document.getElementById('moon-icon').style.display=DARK?'block':'none';
+  document.getElementById('theme-btn').title=DARK?'Switch to Light Mode':'Switch to Dark Mode';
+}
+
+// System theme detection
+if(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches){
+  toggleTheme();
+}
+
+function openVoice(){
+  document.getElementById('vmodal').classList.add('open');
+  startVoice();
+}
+function closeVoice(){
+  document.getElementById('vmodal').classList.remove('open');
+  if(window._rec){ try{window._rec.stop();}catch(e){} }
+}
+function startVoice(){
+  var lc=LC[LANG]||LC.en;
+  document.getElementById('vstatus').textContent=lc.vs;
+  document.getElementById('vtranscript').textContent='Waiting for your voice…';
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    document.getElementById('vstatus').textContent='Voice not supported 😔';
+    document.getElementById('vtranscript').textContent='Please use Chrome browser. You can also type your question!';
+    return;
+  }
+  var r=new SR();
+  window._rec=r;
+  r.lang={en:'en-NG',pidgin:'en-NG',ha:'ha',ig:'ig',yo:'yo'}[LANG]||'en-NG';
+  r.continuous=false; r.interimResults=true;
+  r.onstart=function(){ document.getElementById('vstatus').textContent='🎙️ Listening…'; };
+  r.onresult=function(e){
+    var t=Array.from(e.results).map(function(x){return x[0].transcript;}).join('');
+    document.getElementById('vtranscript').textContent=t;
+    if(e.results[e.results.length-1].isFinal){
+      document.getElementById('vstatus').textContent='✅ Got it! Searching…';
+      document.getElementById('search-input').value=t;
+      setTimeout(function(){ closeVoice(); doSearch(); },700);
+    }
+  };
+  r.onerror=function(e){
+    document.getElementById('vstatus').textContent=e.error==='not-allowed'?'⚠️ Mic permission denied':'⚠️ Error — please type instead';
+    document.getElementById('vtranscript').textContent=e.error==='not-allowed'?'Allow microphone access in your browser settings.':e.error;
+  };
+  r.start();
+}
+
+document.getElementById('search-input').addEventListener('keydown',function(e){ if(e.key==='Enter') doSearch(); });
+document.getElementById('vmodal').addEventListener('click',function(e){ if(e.target===this) closeVoice(); });
+</script>
+</body>
+</html>
